@@ -1,0 +1,239 @@
+2019-03-15 15:58:55 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 15:58:55 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 15:58:55 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 15:58:55 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 15:59:10 ERROR 线程：1 - 获取连接失败!
+com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 192.168.1.49, port 60332 has failed. Error: "Connection refused: no further information. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:228)
+	at com.microsoft.sqlserver.jdbc.SQLServerException.ConvertConnectExceptionToSQLServerException(SQLServerException.java:285)
+	at com.microsoft.sqlserver.jdbc.SocketFinder.findSocket(IOBuffer.java:2437)
+	at com.microsoft.sqlserver.jdbc.TDSChannel.open(IOBuffer.java:641)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2245)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:1921)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:1762)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1077)
+	at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:618)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at cn.mastercom.backstage.db.BaseDbHelper.getConnection(BaseDbHelper.java:39)
+	at cn.mastercom.backstage.db.BaseDbHelper.executeResultSet(BaseDbHelper.java:89)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:139)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.qrySubConnectionStringReal(ConnectionInfo.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.<init>(ConnectionInfo.java:111)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.dealOne(DbConfigHelper.java:176)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.getConnectionInfo(DbConfigHelper.java:137)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.init(DbConfigHelper.java:79)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.<init>(DbConfigHelper.java:106)
+	at cn.mastercom.backstage.roadstat.residentuserquery.ConfigHelper.<clinit>(ConfigHelper.java:49)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.<clinit>(SrcData.java:28)
+2019-03-15 15:59:10 INFO 线程：1 - 读取到 0 条分库信息
+2019-03-15 15:59:10 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 15:59:10 ERROR 线程：1 - 获取连接失败!
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at cn.mastercom.backstage.db.BaseDbHelper.getConnection(BaseDbHelper.java:39)
+	at cn.mastercom.backstage.databaseclient.DbClient.getConnection(DbClient.java:125)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.createTable(SrcData.java:115)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.main(SrcData.java:137)
+2019-03-15 16:02:07 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:02:07 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:02:11 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:02:16 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:02:31 ERROR 线程：1 - 获取连接失败!
+com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 192.168.1.49, port 60332 has failed. Error: "Connection refused: no further information. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:228)
+	at com.microsoft.sqlserver.jdbc.SQLServerException.ConvertConnectExceptionToSQLServerException(SQLServerException.java:285)
+	at com.microsoft.sqlserver.jdbc.SocketFinder.findSocket(IOBuffer.java:2437)
+	at com.microsoft.sqlserver.jdbc.TDSChannel.open(IOBuffer.java:641)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2245)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:1921)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:1762)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1077)
+	at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:618)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at cn.mastercom.backstage.db.BaseDbHelper.getConnection(BaseDbHelper.java:39)
+	at cn.mastercom.backstage.db.BaseDbHelper.executeResultSet(BaseDbHelper.java:89)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:139)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.qrySubConnectionStringReal(ConnectionInfo.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.<init>(ConnectionInfo.java:111)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.dealOne(DbConfigHelper.java:176)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.getConnectionInfo(DbConfigHelper.java:137)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.init(DbConfigHelper.java:79)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.<init>(DbConfigHelper.java:106)
+	at cn.mastercom.backstage.roadstat.residentuserquery.ConfigHelper.<clinit>(ConfigHelper.java:49)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.<clinit>(SrcData.java:28)
+2019-03-15 16:02:31 INFO 线程：1 - 读取到 0 条分库信息
+2019-03-15 16:02:34 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:03:20 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:03:20 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:03:23 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:03:23 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:03:38 ERROR 线程：1 - 获取连接失败!
+com.microsoft.sqlserver.jdbc.SQLServerException: The TCP/IP connection to the host 192.168.1.49, port 60332 has failed. Error: "Connection refused: no further information. Verify the connection properties. Make sure that an instance of SQL Server is running on the host and accepting TCP/IP connections at the port. Make sure that TCP connections to the port are not blocked by a firewall.".
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:228)
+	at com.microsoft.sqlserver.jdbc.SQLServerException.ConvertConnectExceptionToSQLServerException(SQLServerException.java:285)
+	at com.microsoft.sqlserver.jdbc.SocketFinder.findSocket(IOBuffer.java:2437)
+	at com.microsoft.sqlserver.jdbc.TDSChannel.open(IOBuffer.java:641)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2245)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:1921)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:1762)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1077)
+	at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:618)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at cn.mastercom.backstage.db.BaseDbHelper.getConnection(BaseDbHelper.java:39)
+	at cn.mastercom.backstage.db.BaseDbHelper.executeResultSet(BaseDbHelper.java:89)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:139)
+	at cn.mastercom.backstage.databaseclient.DbClient.executeResultSet(DbClient.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.qrySubConnectionStringReal(ConnectionInfo.java:147)
+	at cn.mastercom.backstage.databaseclient.ConnectionInfo.<init>(ConnectionInfo.java:111)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.dealOne(DbConfigHelper.java:176)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.getConnectionInfo(DbConfigHelper.java:137)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.init(DbConfigHelper.java:79)
+	at cn.mastercom.backstage.databaseclient.DbConfigHelper.<init>(DbConfigHelper.java:106)
+	at cn.mastercom.backstage.roadstat.residentuserquery.ConfigHelper.<clinit>(ConfigHelper.java:49)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.<clinit>(SrcData.java:28)
+2019-03-15 16:03:38 INFO 线程：1 - 读取到 0 条分库信息
+2019-03-15 16:03:38 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:04:12 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:04:12 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:04:12 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:04:12 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:04:13 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:04:14 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:05:30 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:05:30 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:05:31 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:05:31 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:05:32 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:05:32 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:05:52 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:05:52 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:05:52 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:05:53 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:05:53 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:05:53 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:07:16 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:07:16 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:07:16 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:07:16 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:07:17 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:07:17 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:07:32 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:07:32 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:07:33 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:07:33 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:07:34 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:07:34 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:08:10 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:08:10 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:08:10 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:08:11 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:08:11 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:08:11 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:17:43 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:17:43 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:17:43 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:17:43 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:17:44 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:17:44 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:18:03 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:18:03 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:18:03 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:18:04 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:18:04 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:18:04 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:18:32 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:18:32 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:18:34 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:18:35 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:18:35 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:18:35 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:19:25 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:19:25 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:19:26 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:19:26 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:19:27 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:19:27 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:20:25 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:20:25 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:20:25 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:20:26 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:20:27 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:20:27 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:23:15 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:23:15 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:23:15 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:23:16 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:23:17 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:23:17 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:23:36 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:23:36 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:23:36 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:23:36 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:23:37 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:23:37 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:23:50 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 16:23:50 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 16:23:50 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 16:23:51 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 16:23:52 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 16:23:52 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 16:40:21 INFO 线程：1 - 43D938AC9ADBA0852876EFB1640BBA46
+2019-03-15 16:42:00 INFO 线程：1 - 43D938AC9ADBA0852876EFB1640BBA46
+2019-03-15 16:50:22 INFO 线程：1 - 43D938AC9ADBA0852876EFB1640BBA46
+2019-03-15 16:50:40 INFO 线程：1 - 43D938AC9ADBA0852876EFB1640BBA46
+2019-03-15 16:51:35 INFO 线程：1 - 43D938AC9ADBA0852876EFB1640BBA46
+2019-03-15 17:06:18 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 17:06:18 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 17:06:28 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 17:06:28 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 17:06:29 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 17:06:29 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 17:06:55 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:06:58 ERROR 线程：1 - 读取小区配置出错!null
+2019-03-15 17:08:10 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 17:08:10 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 17:08:11 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 17:08:46 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 17:08:58 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 17:08:58 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 17:10:03 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:10:03 ERROR 线程：1 - 读取小区配置出错!null
+2019-03-15 17:10:38 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 17:10:38 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 17:10:39 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 17:10:40 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 17:10:40 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 17:10:40 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 17:10:43 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:10:43 ERROR 线程：1 - 读取小区配置出错!null
+2019-03-15 17:11:21 INFO 线程：1 - 开始读取配置文件...
+2019-03-15 17:11:21 INFO 线程：1 - 当前路径:F:\workspace\ResidentUserQuery
+2019-03-15 17:11:21 INFO 线程：1 - 默认数据库类型:SqlServer
+2019-03-15 17:11:22 INFO 线程：1 - 查询 exec [proc_数据库配置_分库信息] 'CITY'
+2019-03-15 17:11:23 INFO 线程：1 - 读取到 2 条分库信息
+2019-03-15 17:11:23 INFO 线程：1 - 读取配置文件完毕.
+2019-03-15 17:11:28 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:12:54 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:12:58 ERROR 线程：1 - 读取常驻配置!null
+2019-03-15 17:13:08 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:16:42 ERROR 线程：1 - 读取常驻配置!null
+2019-03-15 17:16:53 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:16:56 ERROR 线程：1 - 读取常驻配置!
+java.lang.NullPointerException
+	at cn.mastercom.backstage.roadstat.residentuserquery.ResidentUserData.read(ResidentUserData.java:27)
+	at cn.mastercom.backstage.roadstat.residentuserquery.ResidentUserData.getUserCellMap(Unknown Source)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.dealStream(SrcData.java:73)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.parseSrcFile(SrcData.java:63)
+	at cn.mastercom.backstage.roadstat.residentuserquery.SrcData.parseSrcFile(SrcData.java:46)
+	at cn.mastercom.backstage.roadstat.residentuserquery.Main.main(Main.java:11)
+2019-03-15 17:22:03 INFO 线程：1 - 开始读取常驻配置...
+2019-03-15 17:22:07 INFO 线程：1 - 读取小区配置完毕 小区数=157
+2019-03-15 17:22:54 INFO 线程：1 - 共查询1个号码
+2019-03-15 17:22:56 INFO 线程：1 - F:/qq接收的文件/预测模型/result_bak开始写入文件
+2019-03-15 17:22:56 INFO 线程：1 - F:/qq接收的文件/预测模型/result_bak写入文件完毕
