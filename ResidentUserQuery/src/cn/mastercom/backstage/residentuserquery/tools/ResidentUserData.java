@@ -11,17 +11,19 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-
-import cn.mastercom.backstage.comm.InfoLogger;
 import cn.mastercom.backstage.residentuserquery.MyProperties;
 
 @Component
 public class ResidentUserData
 {
+	private static Logger log = LoggerFactory.getLogger(ResidentUserData.class);
+	
 	private  Map<String, Long> userCellMap;
 	
 	@Autowired
@@ -34,9 +36,9 @@ public class ResidentUserData
 	private  void read()
 	{
 		userCellMap=new HashMap<>();
-		InfoLogger.info( "开始读取常驻配置...");
+		log.info( "开始读取常驻配置...");
 		String sql="SELECT DISTINCT MSISDN,ECI FROM "+myProperties.getTableName();
-		InfoLogger.info( sql);
+		log.info( sql);
 		try(
 			Connection conn=dataSource.getConnection();
 			PreparedStatement statment = conn.prepareStatement(
@@ -49,11 +51,11 @@ public class ResidentUserData
 				userCellMap.put(rs.getString("MSISDN"), rs.getLong("ECI"));
 			}
 
-			InfoLogger.info("读取常驻配置完毕 常驻配置数=" + userCellMap.size());
+			log.info("读取常驻配置完毕 常驻配置数=" + userCellMap.size());
 		}
 		catch (Exception e)
 		{
-			InfoLogger.error("读取常驻配置!",e);
+			log.error("读取常驻配置!",e);
 		}
 	}
 

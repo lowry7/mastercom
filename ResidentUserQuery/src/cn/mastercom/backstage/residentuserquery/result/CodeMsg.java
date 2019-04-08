@@ -18,6 +18,7 @@ public class CodeMsg {
 	public static final  CodeMsg MOBILE_ERROR = new CodeMsg(500213, "手机号格式错误");
 	public static final  CodeMsg MOBILE_NOT_EXIST = new CodeMsg(500214, "手机号不存在");
 	public static final  CodeMsg PASSWORD_ERROR = new CodeMsg(500215, "密码错误");
+	public static final  CodeMsg CODE_ERROR = new CodeMsg(500216, "验证码错误");
 	
 	
 	//商品模块 5003XX
