@@ -1,24 +1,28 @@
 package cn.mastercom.backstage.residentuserquery.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
-import cn.mastercom.backstage.residentuserquery.service.impl.UserService;
+import cn.mastercom.backstage.residentuserquery.result.Result;
+import cn.mastercom.backstage.residentuserquery.service.UserService;
 import cn.mastercom.backstage.residentuserquery.vo.LoginVo;
 
 @Controller
 public class UserController
 {
+	
+	private static Logger log = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	UserService userService;
 	
 	String sendverifycode;
+	
 	@RequestMapping(value="/")
     public String hello(Model model) 
 	{
@@ -36,14 +40,15 @@ public class UserController
 	@ResponseBody
     public void sendverifycode() 
 	{
-		userService.sendverifycode();
+		sendverifycode=userService.sendverifycode();
     }
 	
 	@RequestMapping(value="/login/do_login")
 	@ResponseBody
-    public String do_login(LoginVo loginVo)
+    public Result<?> doogin(LoginVo loginVo)
 	{
-		System.out.println(loginVo.toString());
-		return loginVo.toString();
+    	log.info(loginVo.toString());
+    	//登录
+    	return Result.success(loginVo);
 	}
 }

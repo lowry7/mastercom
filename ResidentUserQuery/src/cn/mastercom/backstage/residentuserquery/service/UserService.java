@@ -1,4 +1,4 @@
-package cn.mastercom.backstage.residentuserquery.service.impl;
+package cn.mastercom.backstage.residentuserquery.service;
 
 import java.util.Random;
 
@@ -14,7 +14,7 @@ public class UserService
 		return password;
 	}
 
-	public void sendverifycode() {
+	public String sendverifycode() {
 		String code = "";
 		Random random = new Random();
 		for (int i = 0; i < 6; i++) {
@@ -25,5 +25,6 @@ public class UserService
  
 		}
 		System.out.println(code);
+		return code;
 	}
 }

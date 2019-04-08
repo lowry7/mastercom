@@ -1,4 +1,4 @@
-package cn.mastercom.backstage.residentuserquery;
+package cn.mastercom.backstage.residentuserquery.tools;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
