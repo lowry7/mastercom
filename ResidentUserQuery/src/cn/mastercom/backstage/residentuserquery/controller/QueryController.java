@@ -2,6 +2,7 @@ package cn.mastercom.backstage.residentuserquery.controller;
 
 import javax.servlet.http.HttpSession;
 
+import cn.mastercom.backstage.residentuserquery.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,10 @@ public class QueryController
 	{
 		if(session.getAttribute(Const.USER_KEY)==null)
 		{
-			return Result.error(CodeMsg.REQUEST_ILLEGAL);
+			return Result.error(CodeMsg.SESSION_ERROR);
 		}
-		String sb =queryService.doQuery(querytextarea);
+		String userId= (String)session.getAttribute(Const.USER_KEY);
+		String sb =queryService.doQuery(userId,querytextarea);
 		log.info(sb);
 		return Result.success(sb);
 	}

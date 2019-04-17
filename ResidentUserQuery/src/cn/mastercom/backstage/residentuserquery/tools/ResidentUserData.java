@@ -42,7 +42,7 @@ public class ResidentUserData
 		try(
 			Connection conn=dataSource.getConnection();
 			PreparedStatement statment = conn.prepareStatement(
-					"SELECT DISTINCT MSISDN,ECI FROM "+"tb_常驻用户分析_数据_用户常驻地_dd_180125");
+					"SELECT DISTINCT MSISDN,ECI FROM "+myProperties.getTableName());
 			ResultSet rs =statment.executeQuery()
 			)
 		{

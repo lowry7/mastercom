@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.mastercom.backstage.residentuserquery.result.CodeMsg;
 import cn.mastercom.backstage.residentuserquery.result.Result;
 import cn.mastercom.backstage.residentuserquery.service.UserService;
 import cn.mastercom.backstage.residentuserquery.tools.Const;
 import cn.mastercom.backstage.residentuserquery.vo.LoginVo;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 public class UserController
@@ -25,14 +26,7 @@ public class UserController
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value="/")
-    public String hello(Model model) 
-	{
-		model.addAttribute("name","罗海涛");
-		return "hello";
-    }
-	
-	@RequestMapping(value="/login")
+	@RequestMapping(value="")
     public String login(Model model) 
 	{
 		return "login";
@@ -40,25 +34,27 @@ public class UserController
 	
 	@RequestMapping(value="/login/sendverifycode")
 	@ResponseBody
-    public void sendverifycode(HttpSession session) 
+    public void sendverifycode(HttpSession session,String tel)
 	{
-		String sendverifycode=userService.sendverifycode();
-		session.setAttribute(Const.CODE_KEY, sendverifycode);
+		String code=userService.getCode(tel);
+		if(!StringUtils.isEmpty(code))
+		{
+			session.setAttribute(Const.CODE_KEY, code);
+		}
+		log.info("s"+code);
+		userService.sendverifycode(tel,code);
+
     }
 	
-	@RequestMapping(value="/login/do_login")
+	@RequestMapping(value="/login/do_login",method = RequestMethod.POST)
 	@ResponseBody
-    public Result<?> doogin(HttpSession session,LoginVo loginVo)
+    public Result doLogin(HttpSession session,LoginVo loginVo)
 	{
     	log.info(loginVo.toString());
-    	String sendverifycode = (String) session.getAttribute(Const.CODE_KEY);
-    	if(loginVo.getCode().equals(sendverifycode))
-    	{
-    		//登陆成功
-    		session.setAttribute(Const.USER_KEY, loginVo);
-        	return Result.success(CodeMsg.SUCCESS);
-    	}
-    	//登陆失败
-    	return Result.error(CodeMsg.CODE_ERROR);
+		Result<String> response = userService.doLogin(session,loginVo);
+		if(response.isSuccess()){
+			session.setAttribute(Const.USER_KEY,loginVo.getMobile());
+		}
+    	return response;
 	}
 }

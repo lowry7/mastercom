@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 public class MyProperties
 {
 	private String tableName;
+	private String logTableName;
+	private String connString;
 
 	public String getTableName()
 	{
@@ -18,5 +20,20 @@ public class MyProperties
 	{
 		this.tableName = tableName;
 	}
-	
+
+	public String getLogTableName() {
+		return logTableName;
+	}
+
+	public void setLogTableName(String logTableName) {
+		this.logTableName = logTableName;
+	}
+
+	public String getConnString() {
+		return connString;
+	}
+
+	public void setConnString(String connString) {
+		this.connString = connString;
+	}
 }
