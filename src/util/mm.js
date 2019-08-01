@@ -6,9 +6,11 @@
 */
 
 'use strict';
-var Hogan = require('hogan');
+var Hogan = require('hogan.js');
+
+
 var conf = {
-    serverHost : ''
+    serverHost : 'http://127.0.0.1:8080/mmall'
 };
 var _mm = {
     // 网络请求

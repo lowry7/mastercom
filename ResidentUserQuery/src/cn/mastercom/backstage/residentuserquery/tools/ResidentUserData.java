@@ -24,7 +24,7 @@ public class ResidentUserData
 {
 	private static Logger log = LoggerFactory.getLogger(ResidentUserData.class);
 	
-	private  Map<String, Long> userCellMap;
+	private  Map<String, StringBuilder> userCellMap;
 	
 	@Autowired
 	private DataSource dataSource;
@@ -48,7 +48,16 @@ public class ResidentUserData
 		{
 			while (rs.next())
 			{
-				userCellMap.put(rs.getString("MSISDN"), rs.getLong("ECI"));
+				String misidn =rs.getString("MSISDN");
+				String eci =String.valueOf(rs.getLong("ECI"));
+				if(userCellMap.containsKey(misidn))
+				{
+					userCellMap.get(misidn).append("\t"+eci);
+				}
+				else
+				{
+					userCellMap.put(misidn,new StringBuilder(eci));
+				}
 			}
 
 			log.info("读取常驻配置完毕 常驻配置数=" + userCellMap.size());
@@ -59,7 +68,7 @@ public class ResidentUserData
 		}
 	}
 
-	public Map<String, Long> getUserCellMap()
+	public Map<String, StringBuilder> getUserCellMap()
 	{
 		if(userCellMap==null)
 		{

@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="mmall" options="-extdirs G:\BaiduYunDownload\3-Java从零到企业级电商项目实战\w10fwr/src/main/webapp/WEB-INF/lib" />
+      <module name="mmall" options="" />
     </option>
   </component>
 </project>
