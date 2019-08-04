@@ -19,7 +19,7 @@ public interface CartMapper {
 
     int updateByPrimaryKey(Cart record);
 
-	Cart selectCartByUserIdProductId(Integer userId, Integer productId);
+	Cart selectCartByUserIdProductId(@Param(value="userId")Integer userId, @Param(value="productId")Integer productId);
 
 	void deleteByUserIdProductIds(@Param(value="userId")Integer userId, @Param(value="productList")List<String> productList);
 
