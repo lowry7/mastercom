@@ -18,7 +18,6 @@ public class DaoTest extends TestBase {
     @Autowired
     private UserMapper userMapper;
 
-    @Ignore
     @Test
     public void testDao(){
         User a = new User();

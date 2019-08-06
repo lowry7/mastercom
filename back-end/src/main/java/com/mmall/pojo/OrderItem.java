@@ -6,8 +6,6 @@ import java.util.Date;
 public class OrderItem {
     private Integer id;
 
-    private Integer userId;
-
     private Long orderNo;
 
     private Integer productId;
@@ -25,8 +23,11 @@ public class OrderItem {
     private Date createTime;
 
     private Date updateTime;
+    
 
-    public OrderItem(Integer id, Integer userId, Long orderNo, Integer productId, String productName, String productImage, BigDecimal currentUnitPrice, Integer quantity, BigDecimal totalPrice, Date createTime, Date updateTime) {
+    private Integer userId;
+
+    public OrderItem(Integer id,Long orderNo, Integer productId, String productName, String productImage, BigDecimal currentUnitPrice, Integer quantity, BigDecimal totalPrice, Date createTime, Date updateTime,Integer userId) {
         this.id = id;
         this.userId = userId;
         this.orderNo = orderNo;
@@ -112,12 +113,12 @@ public class OrderItem {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public Date getCreateTime() {
-        return createTime;
+	    return createTime;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public void setCreateTime(Date createTime) {

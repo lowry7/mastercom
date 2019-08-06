@@ -1,17 +1,22 @@
 package com.mmall.service.impl;
 
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
+import com.mmall.redis.RedisService;
+import com.mmall.rediskey.UserKey;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.UUID;
 
 /**
  * Created by geely
@@ -21,23 +26,20 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private RedisService redisService;
+    
+	public static final String COOKI_NAME_TOKEN = "token";
 
     @Override
-    public ServerResponse<User> login(String username, String password) {
+    public User login(String username, String password) {
         int resultCount = userMapper.checkUsername(username);
         if(resultCount == 0 ){
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
 
         String md5Password = MD5Util.MD5EncodeUtf8(password);
-        User user  = userMapper.selectLogin(username,md5Password);
-        if(user == null){
-            return ServerResponse.createByErrorMessage("密码错误");
-        }
-
-        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
-        return ServerResponse.createBySuccess("登录成功",user);
+        return userMapper.selectLogin(username,md5Password);
     }
 
 
@@ -203,6 +205,11 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByError();
     }
 
-
-
+    public void addCookieToken(HttpServletResponse response, String token,User user) {
+		redisService.set(UserKey.token, token, user);
+		Cookie cookie = new Cookie(COOKI_NAME_TOKEN, token);
+		cookie.setMaxAge(UserKey.token.expireSeconds());
+		cookie.setPath("/");
+		response.addCookie(cookie);
+	}
 }
