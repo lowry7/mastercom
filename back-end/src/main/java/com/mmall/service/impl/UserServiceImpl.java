@@ -5,6 +5,9 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mmall.common.ResponseCode;
+import com.mmall.exception.GlobalException;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +38,8 @@ public class UserServiceImpl implements IUserService {
     public User login(String username, String password) {
         int resultCount = userMapper.checkUsername(username);
         if(resultCount == 0 ){
-            return ServerResponse.createByErrorMessage("用户名不存在");
+            throw new GlobalException(ResponseCode.ERROR.setDesc("用户名不存在"));
         }
-
         String md5Password = MD5Util.MD5EncodeUtf8(password);
         return userMapper.selectLogin(username,md5Password);
     }
@@ -205,7 +207,9 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByError();
     }
 
-    public void addCookieToken(HttpServletResponse response, String token,User user) {
+
+    @Override
+    public void addCookie(HttpServletResponse response, String token,User user) {
 		redisService.set(UserKey.token, token, user);
 		Cookie cookie = new Cookie(COOKI_NAME_TOKEN, token);
 		cookie.setMaxAge(UserKey.token.expireSeconds());

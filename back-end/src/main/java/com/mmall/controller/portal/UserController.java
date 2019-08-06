@@ -1,7 +1,9 @@
 package com.mmall.controller.portal;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,21 +33,22 @@ public class UserController {
              * 用户登录
      * @param username
      * @param password
-     * @param session
+     * @param response
      * @return
      */
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session){
-        ServerResponse<User> response = iUserService.login(username,password);
-        //生成cookie
-      	String token= UUIDUtil.uuid();
-      	iUserService.addCookie(response, token, user);
-        if(response.isSuccess()){
-        	
-            session.setAttribute(Const.CURRENT_USER,response.getData());
+    public ServerResponse<User> login(String username, String password, HttpServletResponse response){
+        User user = iUserService.login(username,password);
+        if(user!=null){
+            //生成cookie
+            String token= UUIDUtil.uuid();
+            iUserService.addCookie(response, token, user);
+            return ServerResponse.createBySuccess();
+        }else{
+            return ServerResponse.createByError();
         }
-        return response;
+
     }
 
     @RequestMapping(value = "logout.do",method = RequestMethod.POST)

@@ -1,4 +1,4 @@
-package com.mall.exception;
+package com.mmall.exception;
 
 import java.util.List;
 
@@ -21,15 +21,15 @@ public class GlobalExceptionHandler {
 		e.printStackTrace();
 		if(e instanceof GlobalException) {
 			GlobalException ex = (GlobalException)e;
-			return ServerResponse.error(ex.getCm());
+			return ServerResponse.createByError(ex.getResponseCode());
 		}else if(e instanceof BindException) {
 			BindException ex = (BindException)e;
 			List<ObjectError> errors = ex.getAllErrors();
 			ObjectError error = errors.get(0);
 			String msg = error.getDefaultMessage();
-			return ServerResponse.error(ResponseCode.BIND_ERROR.fillArgs(msg));
+			return ServerResponse.createByError(ResponseCode.BIND_ERROR.setDesc(msg));
 		}else {
-			return ServerResponse.error(ResponseCode.SERVER_ERROR);
+			return ServerResponse.createByError(ResponseCode.SERVER_ERROR);
 		}
 	}
 }
