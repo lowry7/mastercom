@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 			List<ObjectError> errors = ex.getAllErrors();
 			ObjectError error = errors.get(0);
 			String msg = error.getDefaultMessage();
-			return ServerResponse.createByError(ResponseCode.BIND_ERROR.setDesc(msg));
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.BIND_ERROR, ResponseCode.BIND_ERROR.fillArgs(msg));
 		}else {
 			return ServerResponse.createByError(ResponseCode.SERVER_ERROR);
 		}

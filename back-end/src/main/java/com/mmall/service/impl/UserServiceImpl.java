@@ -3,26 +3,28 @@ package com.mmall.service.impl;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mmall.common.ResponseCode;
-import com.mmall.exception.GlobalException;
-import com.sun.deploy.net.HttpResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mmall.common.Const;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
+import com.mmall.exception.GlobalException;
 import com.mmall.pojo.User;
 import com.mmall.redis.RedisService;
 import com.mmall.rediskey.UserKey;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
+import com.mmall.util.UUIDUtil;
 
 /**
- * Created by geely
+ * Created by LHT
  */
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
@@ -35,15 +37,22 @@ public class UserServiceImpl implements IUserService {
 	public static final String COOKI_NAME_TOKEN = "token";
 
     @Override
-    public User login(String username, String password) {
+    public User login(String username, String password,HttpServletResponse response) {
         int resultCount = userMapper.checkUsername(username);
         if(resultCount == 0 ){
-            throw new GlobalException(ResponseCode.ERROR.setDesc("用户名不存在"));
+            throw new GlobalException(ResponseCode.LOGIN_USERNAMEORPASSWORD_ERROR);
         }
         String md5Password = MD5Util.MD5EncodeUtf8(password);
-        return userMapper.selectLogin(username,md5Password);
+        User user=userMapper.selectLogin(username,md5Password);
+        if(user==null){
+        	throw new GlobalException(ResponseCode.LOGIN_USERNAMEORPASSWORD_ERROR);
+        }
+        //生成cookie
+        String token= UUIDUtil.uuid();
+        addCookie(response, token, user);
+        return user;
     }
-
+    
 
 
     public ServerResponse<String> register(User user){
@@ -54,6 +63,10 @@ public class UserServiceImpl implements IUserService {
         validResponse = this.checkValid(user.getEmail(),Const.EMAIL);
         if(!validResponse.isSuccess()){
             return validResponse;
+        }
+        int count = userMapper.checkUsername(user.getUsername());
+        if(count>0){
+        	throw new GlobalException(ResponseCode.USER_NAME_ALREADY_EXISTS);
         }
         user.setRole(Const.Role.ROLE_CUSTOMER);
         //MD5加密
@@ -142,7 +155,7 @@ public class UserServiceImpl implements IUserService {
 
 
     public ServerResponse<String> resetPassword(String passwordOld,String passwordNew,User user){
-        //防止横向越权,要校验一下这个用户的旧密码,一定要指定是这个用户.因为我们会查询一个count(1),如果不指定id,那么结果就是true啦count>0;
+        //防止横向越权,要校验一下这个用户的旧密码,一定要指定是这个用户.因为我们会查询一个count(1),如果不指定id,那么结果就是true啦count>0
         int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld),user.getId());
         if(resultCount == 0){
             return ServerResponse.createByErrorMessage("旧密码错误");
@@ -191,8 +204,6 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
-
     //backend
 
     /**
@@ -207,13 +218,54 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByError();
     }
 
-
-    @Override
-    public void addCookie(HttpServletResponse response, String token,User user) {
+    
+    private void addCookie(HttpServletResponse response, String token,User user) {
 		redisService.set(UserKey.token, token, user);
 		Cookie cookie = new Cookie(COOKI_NAME_TOKEN, token);
 		cookie.setMaxAge(UserKey.token.expireSeconds());
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
+    
+    @Override
+    public User getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+		String paramToken = request.getParameter(COOKI_NAME_TOKEN);
+		String cookieToken =null;
+		if(StringUtils.isEmpty(paramToken)) {
+			cookieToken = getCookieValue(request, COOKI_NAME_TOKEN);
+			if(StringUtils.isEmpty(cookieToken)){
+				return null;
+			}
+		}
+		String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+		return getByToken(response, token);
+	}
+	
+	private String getCookieValue(HttpServletRequest request, String cookiName) {
+		Cookie[]  cookies = request.getCookies();
+		if(cookies == null || cookies.length <= 0){
+			return null;
+		}
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals(cookiName)) {
+				return cookie.getValue();
+			}
+		}
+		return null;
+	}
+	
+
+	public User getByToken(HttpServletResponse response, String token) {
+		if(StringUtils.isEmpty(token)) {
+			return null;
+		}
+		User user = redisService.get(UserKey.token, token,User.class);
+		//延长有效期
+		if(user != null) {
+			addCookie(response, token, user);
+		}
+		return user;
+	}
+
+	
 }

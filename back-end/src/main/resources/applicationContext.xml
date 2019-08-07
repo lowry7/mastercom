@@ -14,7 +14,6 @@
     <!--<context:annotation-config/>-->
     <aop:aspectj-autoproxy/>
 
-
     <!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供-->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://127.0.0.1:61616"/>

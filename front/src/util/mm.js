@@ -25,11 +25,11 @@ var _mm = {
                     typeof param.success === 'function' && param.success(res.data, res.msg);
                 }
                 // 没有登录状态，需要强制登录
-                else if(10 === res.status){
+                else if(500102 === res.status){
                     _this.doLogin();
                 }
                 // 请求数据错误
-                else if(1 === res.status){
+                else {
                     typeof param.error === 'function' && param.error(res.msg);
                 }
             },

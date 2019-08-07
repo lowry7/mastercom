@@ -1,17 +1,17 @@
 package com.mmall.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
-import com.sun.deploy.net.HttpResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by geely
  */
 public interface IUserService {
 
-    User login(String username, String password);
+    User login(String username, String password, HttpServletResponse response);
 
     ServerResponse<String> register(User user);
 
@@ -31,5 +31,5 @@ public interface IUserService {
 
     ServerResponse checkAdminRole(User user);
 
-    void addCookie(HttpServletResponse response, String token, User user);
+	User getUserInfo(HttpServletRequest request, HttpServletResponse response);
 }

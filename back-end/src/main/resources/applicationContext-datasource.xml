@@ -89,4 +89,21 @@
     </bean>
 
 
+
+	<!-- redis-->
+	
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    	<property name="maxTotal" value="${redis.poolMaxTotal}"></property>
+    	<property name="maxIdle"  value="${redis.poolMaxIdle}"></property>
+    	<property name="maxWaitMillis"  value="${redis.poolMaxWait}"></property>
+    </bean>
+    
+     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+        <constructor-arg name="host" value="${redis.host}" />
+        <constructor-arg name="port" value="${redis.port}" type="int" />
+        <constructor-arg name="timeout" value="${redis.timeout}" type="int" />
+        <constructor-arg name="password" value="${redis.password}" />
+        <constructor-arg name="database" value="0" type="int" />
+    </bean>
 </beans>

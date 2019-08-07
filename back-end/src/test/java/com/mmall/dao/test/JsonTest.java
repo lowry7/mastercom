@@ -15,7 +15,6 @@ import com.mmall.pojo.User;
 public class JsonTest
 {
 	
-	
 	@Test
 	public void json()
 	{

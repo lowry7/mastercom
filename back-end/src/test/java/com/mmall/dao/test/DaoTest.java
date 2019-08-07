@@ -1,14 +1,14 @@
 package com.mmall.dao.test;
 
-import com.mmall.pojo.User;
-import com.mmall.test.TestBase;
-import com.mmall.dao.UserMapper;
-import org.junit.Ignore;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import com.mmall.pojo.User;
+import com.mmall.service.IUserService;
+import com.mmall.test.TestBase;
 
 /**
  * Created by geely on mmall.
@@ -16,7 +16,7 @@ import java.util.Date;
 public class DaoTest extends TestBase {
 
     @Autowired
-    private UserMapper userMapper;
+    private IUserService userService;
 
     @Test
     public void testDao(){
@@ -26,7 +26,8 @@ public class DaoTest extends TestBase {
         a.setRole(0);
         a.setCreateTime(new Date());
         a.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        System.out.println(userMapper.insert(a));
+        
+        userService.register(a);
         System.out.println("aaaaaaaaaaaaaa");
     }
 

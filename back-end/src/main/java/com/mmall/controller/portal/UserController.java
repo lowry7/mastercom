@@ -1,9 +1,11 @@
 package com.mmall.controller.portal;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,17 +40,9 @@ public class UserController {
      */
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpServletResponse response){
-        User user = iUserService.login(username,password);
-        if(user!=null){
-            //生成cookie
-            String token= UUIDUtil.uuid();
-            iUserService.addCookie(response, token, user);
-            return ServerResponse.createBySuccess();
-        }else{
-            return ServerResponse.createByError();
-        }
-
+    public ServerResponse<User> login(@NotNull String username,@NotNull String password, HttpServletResponse response){
+        User user = iUserService.login(username,password,response);
+        return ServerResponse.createBySuccess();
     }
 
     @RequestMapping(value = "logout.do",method = RequestMethod.POST)
@@ -74,12 +68,12 @@ public class UserController {
 
     @RequestMapping(value = "get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> getUserInfo(HttpServletRequest request,HttpServletResponse response){
+        User user = iUserService.getUserInfo(request, response);
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
+        return ServerResponse.createByError(ResponseCode.NEED_LOGIN);
     }
 
 
