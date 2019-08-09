@@ -22,6 +22,10 @@ public enum ResponseCode {
 	 LOGIN_USERNAMEORPASSWORD_ERROR (500215, "用户名或者密码错误"),
 	 
 	 USER_NAME_ALREADY_EXISTS(500216, "用户名已存在"),
+	 USER_NAME_ALREADY_NOTEXISTS(500217, "用户名不存在"),
+	 USER_EMAIL_EXISTS(500218, "email已存在"),
+	 USER_QUESTION_NOTEXISTS(500219, "找回密码问题不存在"),
+	 
 	
 	//商品模块 5003XX
 	

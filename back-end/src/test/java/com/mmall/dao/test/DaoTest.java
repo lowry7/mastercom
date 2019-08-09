@@ -18,7 +18,7 @@ public class DaoTest extends TestBase {
     @Autowired
     private IUserService userService;
 
-    @Test
+    @Test(expected=Exception.class)
     public void testDao(){
         User a = new User();
         a.setPassword("111");

@@ -13,11 +13,11 @@ public interface IUserService {
 
     User login(String username, String password, HttpServletResponse response);
 
-    ServerResponse<String> register(User user);
+    boolean register(User user);
 
-    ServerResponse<String> checkValid(String str,String type);
+    boolean checkValid(String str,String type);
 
-    ServerResponse selectQuestion(String username);
+    String selectQuestion(String username);
 
     ServerResponse<String> checkAnswer(String username,String question,String answer);
 

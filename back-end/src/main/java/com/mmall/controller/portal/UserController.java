@@ -55,14 +55,20 @@ public class UserController {
     @RequestMapping(value = "register.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> register(User user){
-        return iUserService.register(user);
+    	if(iUserService.register(user)){
+    		return ServerResponse.createBySuccess();
+    	}
+        return ServerResponse.createByErrorMessage("注册失败");
     }
 
 
     @RequestMapping(value = "check_valid.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> checkValid(String str,String type){
-        return iUserService.checkValid(str,type);
+    public ServerResponse<String> checkValid(@NotNull String str,@NotNull String type){
+    	if(iUserService.checkValid(str,type)){
+    		return ServerResponse.createBySuccess();
+    	}
+        return ServerResponse.createByErrorMessage("校验失败");
     }
 
 
@@ -80,7 +86,7 @@ public class UserController {
     @RequestMapping(value = "forget_get_question.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetGetQuestion(String username){
-        return iUserService.selectQuestion(username);
+        return ServerResponse.createBySuccess(iUserService.selectQuestion(username));
     }
 
 

@@ -38,10 +38,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User login(String username, String password,HttpServletResponse response) {
-        int resultCount = userMapper.checkUsername(username);
-        if(resultCount == 0 ){
-            throw new GlobalException(ResponseCode.LOGIN_USERNAMEORPASSWORD_ERROR);
-        }
         String md5Password = MD5Util.MD5EncodeUtf8(password);
         User user=userMapper.selectLogin(username,md5Password);
         if(user==null){
@@ -55,62 +51,46 @@ public class UserServiceImpl implements IUserService {
     
 
 
-    public ServerResponse<String> register(User user){
-        ServerResponse validResponse = this.checkValid(user.getUsername(),Const.USERNAME);
-        if(!validResponse.isSuccess()){
-            return validResponse;
-        }
-        validResponse = this.checkValid(user.getEmail(),Const.EMAIL);
-        if(!validResponse.isSuccess()){
-            return validResponse;
-        }
-        int count = userMapper.checkUsername(user.getUsername());
-        if(count>0){
-        	throw new GlobalException(ResponseCode.USER_NAME_ALREADY_EXISTS);
-        }
+    public boolean register(User user){
+    	
+        checkValid(user.getUsername(),Const.USERNAME);
+        
+        checkValid(user.getEmail(),Const.EMAIL);
+       
         user.setRole(Const.Role.ROLE_CUSTOMER);
         //MD5加密
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
         int resultCount = userMapper.insert(user);
-        if(resultCount == 0){
-            return ServerResponse.createByErrorMessage("注册失败");
-        }
-        return ServerResponse.createBySuccessMessage("注册成功");
+        return resultCount != 0;
     }
 
-    public ServerResponse<String> checkValid(String str,String type){
-        if(org.apache.commons.lang3.StringUtils.isNotBlank(type)){
-            //开始校验
-            if(Const.USERNAME.equals(type)){
-                int resultCount = userMapper.checkUsername(str);
-                if(resultCount > 0 ){
-                    return ServerResponse.createByErrorMessage("用户名已存在");
-                }
+    public boolean checkValid(String str,String type){
+        //开始校验
+        if(Const.USERNAME.equals(type)){
+            int resultCount = userMapper.checkUsername(str);
+            if(resultCount > 0 ){
+            	throw new GlobalException(ResponseCode.USER_NAME_ALREADY_EXISTS);
             }
-            if(Const.EMAIL.equals(type)){
-                int resultCount = userMapper.checkEmail(str);
-                if(resultCount > 0 ){
-                    return ServerResponse.createByErrorMessage("email已存在");
-                }
+        }else if(Const.EMAIL.equals(type)){
+            int resultCount = userMapper.checkEmail(str);
+            if(resultCount > 0 ){
+            	throw new GlobalException(ResponseCode.USER_EMAIL_EXISTS);
             }
-        }else{
-            return ServerResponse.createByErrorMessage("参数错误");
         }
-        return ServerResponse.createBySuccessMessage("校验成功");
+        return true;
     }
 
-    public ServerResponse selectQuestion(String username){
+    public String selectQuestion(String username){
 
-        ServerResponse validResponse = this.checkValid(username,Const.USERNAME);
-        if(validResponse.isSuccess()){
-            //用户不存在
-            return ServerResponse.createByErrorMessage("用户不存在");
+        int resultCount = userMapper.checkUsername(username);
+        if(resultCount == 0 ){
+            throw new GlobalException(ResponseCode.USER_NAME_ALREADY_NOTEXISTS);
         }
-        String question = userMapper.selectQuestionByUsername(username);
-        if(org.apache.commons.lang3.StringUtils.isNotBlank(question)){
-            return ServerResponse.createBySuccess(question);
+        String questoion=userMapper.selectQuestionByUsername(username);
+        if(StringUtils.isBlank(questoion)){
+        	throw new GlobalException(ResponseCode.USER_QUESTION_NOTEXISTS);
         }
-        return ServerResponse.createByErrorMessage("找回密码的问题是空的");
+        return questoion;
     }
 
     public ServerResponse<String> checkAnswer(String username,String question,String answer){
@@ -130,10 +110,9 @@ public class UserServiceImpl implements IUserService {
         if(org.apache.commons.lang3.StringUtils.isBlank(forgetToken)){
             return ServerResponse.createByErrorMessage("参数错误,token需要传递");
         }
-        ServerResponse validResponse = this.checkValid(username,Const.USERNAME);
-        if(validResponse.isSuccess()){
-            //用户不存在
-            return ServerResponse.createByErrorMessage("用户不存在");
+        int resultCount = userMapper.checkUsername(username);
+        if(resultCount == 0 ){
+            throw new GlobalException(ResponseCode.USER_NAME_ALREADY_NOTEXISTS);
         }
         String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
         if(org.apache.commons.lang3.StringUtils.isBlank(token)){

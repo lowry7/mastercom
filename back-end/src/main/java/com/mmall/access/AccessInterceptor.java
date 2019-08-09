@@ -1,22 +1,26 @@
 package com.mmall.access;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+@Component
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
-	
+
+    Log log=LogFactory.getLog(AccessInterceptor.class);
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        log.info("====================dsd====");
 		if(handler instanceof HandlerMethod) {
 		  // 设置允许多个域名请求
 		  String[] allowDomains = {"http://127.0.0.1:8088"};
