@@ -11,17 +11,12 @@
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="com.mmall" annotation-config="true" />
+	<context:component-scan base-package="com.mmall" annotation-config="true" >
+		<!-- 不扫描 @Controller 和 @ControllerAdvice 注解-->
+		<context:exclude-filter type="regex" expression=".controller.*"/>
+	</context:component-scan>
 
-	<mvc:annotation-driven />
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<!--配置拦截器的作用路径 -->
-			<mvc:mapping path="/**" />
-			<!--定义在下面的表示匹配指定路径的请求才进行拦截 -->
-			<bean class="com.mmall.access.AccessInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
+
 
 	<aop:aspectj-autoproxy />
 

@@ -1,4 +1,4 @@
-package com.mmall.exception;
+package com.mmall.controller.exception;
 
 import com.mmall.common.ResponseCode;
 

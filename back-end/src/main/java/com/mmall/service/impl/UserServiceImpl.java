@@ -15,7 +15,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
-import com.mmall.exception.GlobalException;
+import com.mmall.controller.exception.GlobalException;
 import com.mmall.pojo.User;
 import com.mmall.redis.RedisService;
 import com.mmall.rediskey.UserKey;
