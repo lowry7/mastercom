@@ -1,6 +1,6 @@
 package com.mmall.controller.config;
 
-import com.mmall.access.UserContext;
+import com.mmall.controller.access.UserContext;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 	}
 
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+			NativeWebRequest webRequest, WebDataBinderFactory  binderFactory) {
 		return UserContext.getUser();
 	}
 

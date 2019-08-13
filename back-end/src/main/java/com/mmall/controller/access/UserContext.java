@@ -1,4 +1,4 @@
-package com.mmall.access;
+package com.mmall.controller.access;
 
 
 import com.mmall.pojo.User;

@@ -1,4 +1,4 @@
-package com.mmall.access;
+package com.mmall.controller.access;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

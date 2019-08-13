@@ -8,9 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
@@ -40,7 +38,7 @@ public class UserController {
      */
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(@NotNull String username,@NotNull String password, HttpServletResponse response){
+    public ServerResponse<User> login(@NotNull @RequestParam String username, @NotNull @RequestParam String password, HttpServletResponse response){
         User user = iUserService.login(username,password,response);
         return ServerResponse.createBySuccess();
     }

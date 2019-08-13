@@ -1,13 +1,4 @@
-package com.mmall.access;
-
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.mmall.controller.access;
 
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
@@ -22,6 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
