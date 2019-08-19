@@ -15,6 +15,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
+import com.mmall.controller.access.TokenContext;
 import com.mmall.controller.exception.GlobalException;
 import com.mmall.pojo.User;
 import com.mmall.redis.RedisService;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements IUserService {
     }
     
 
-
+    @Override
     public boolean register(User user){
     	
         checkValid(user.getUsername(),Const.USERNAME);
@@ -93,15 +94,16 @@ public class UserServiceImpl implements IUserService {
         return questoion;
     }
 
-    public ServerResponse<String> checkAnswer(String username,String question,String answer){
+    @Override
+    public boolean checkAnswer(String username,String question,String answer){
         int resultCount = userMapper.checkAnswer(username,question,answer);
         if(resultCount>0){
             //说明问题及问题答案是这个用户的,并且是正确的
             String forgetToken = UUID.randomUUID().toString();
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+username,forgetToken);
-            return ServerResponse.createBySuccess(forgetToken);
+            return true;
         }
-        return ServerResponse.createByErrorMessage("问题的答案错误");
+        return false;
     }
 
 
@@ -148,26 +150,19 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("密码更新失败");
     }
 
-
-    public ServerResponse<User> updateInformation(User user){
-        //username是不能被更新的
-        //email也要进行一个校验,校验新的email是不是已经存在,并且存在的email如果相同的话,不能是我们当前的这个用户的.
-        int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
-        if(resultCount > 0){
-            return ServerResponse.createByErrorMessage("email已存在,请更换email再尝试更新");
-        }
+    @Override
+    public boolean updateInformation(User userVo,String token){
+      
         User updateUser = new User();
-        updateUser.setId(user.getId());
-        updateUser.setEmail(user.getEmail());
-        updateUser.setPhone(user.getPhone());
-        updateUser.setQuestion(user.getQuestion());
-        updateUser.setAnswer(user.getAnswer());
+        updateUser.setId(userVo.getId());
+        updateUser.setEmail(userVo.getEmail());
+        updateUser.setPhone(userVo.getPhone());
+        updateUser.setQuestion(userVo.getQuestion());
+        updateUser.setAnswer(userVo.getAnswer());
 
         int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
-        if(updateCount > 0){
-            return ServerResponse.createBySuccess("更新个人信息成功",updateUser);
-        }
-        return ServerResponse.createByErrorMessage("更新个人信息失败");
+        redisService.set(UserKey.token, token, updateUser);
+        return updateCount > 0;
     }
 
 
@@ -208,6 +203,12 @@ public class UserServiceImpl implements IUserService {
     
     @Override
     public User getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+		String token = getToken(request);
+		return getUserByToken(response, token);
+	}
+
+	private String getToken(HttpServletRequest request)
+	{
 		String paramToken = request.getParameter(COOKI_NAME_TOKEN);
 		String cookieToken =null;
 		if(StringUtils.isEmpty(paramToken)) {
@@ -216,8 +217,9 @@ public class UserServiceImpl implements IUserService {
 				return null;
 			}
 		}
-		String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
-		return getByToken(response, token);
+		String token=StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+		TokenContext.setToken(token);
+		return token;
 	}
 	
 	private String getCookieValue(HttpServletRequest request, String cookiName) {
@@ -234,7 +236,7 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 
-	public User getByToken(HttpServletResponse response, String token) {
+	public User getUserByToken(HttpServletResponse response, String token) {
 		if(StringUtils.isEmpty(token)) {
 			return null;
 		}
@@ -244,6 +246,14 @@ public class UserServiceImpl implements IUserService {
 			addCookie(response, token, user);
 		}
 		return user;
+	}
+
+
+
+	@Override
+	public void logout(String token)
+	{
+		redisService.delete(UserKey.token, token);
 	}
 
 	

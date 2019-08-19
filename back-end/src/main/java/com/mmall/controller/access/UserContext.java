@@ -5,7 +5,7 @@ import com.mmall.pojo.User;
 
 public class UserContext {
 	
-	private static ThreadLocal<User> userHolder = new ThreadLocal<User>();
+	private static ThreadLocal<User> userHolder = new ThreadLocal<>();
 
 	public static void setUser(User user) {
 		userHolder.set(user);

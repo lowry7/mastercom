@@ -25,6 +25,7 @@ public enum ResponseCode {
 	 USER_NAME_ALREADY_NOTEXISTS(500217, "用户名不存在"),
 	 USER_EMAIL_EXISTS(500218, "email已存在"),
 	 USER_QUESTION_NOTEXISTS(500219, "找回密码问题不存在"),
+	 USER_QUESTION_ERROR(500220, "找回密码问题不存在"),
 	 
 	
 	//商品模块 5003XX

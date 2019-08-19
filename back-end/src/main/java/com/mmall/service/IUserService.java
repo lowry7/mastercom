@@ -19,17 +19,19 @@ public interface IUserService {
 
     String selectQuestion(String username);
 
-    ServerResponse<String> checkAnswer(String username,String question,String answer);
+    boolean checkAnswer(String username,String question,String answer);
 
     ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken);
 
     ServerResponse<String> resetPassword(String passwordOld,String passwordNew,User user);
 
-    ServerResponse<User> updateInformation(User user);
+    boolean updateInformation(User userVo, String token);
 
     ServerResponse<User> getInformation(Integer userId);
 
     ServerResponse checkAdminRole(User user);
 
 	User getUserInfo(HttpServletRequest request, HttpServletResponse response);
+
+	void logout(String token);
 }

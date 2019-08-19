@@ -14,11 +14,10 @@ import java.util.List;
 public class WebConfig  extends WebMvcConfigurationSupport {
 
 
-	public WebConfig(){
-		System.out.println("webconfig创建");
-	}
 	@Autowired
     UserArgumentResolver userArgumentResolver;
+	@Autowired
+	TokenArgumentResolver tokenArgumentResolver;
 	
 	@Autowired
 	AccessInterceptor accessInterceptor;
@@ -26,6 +25,7 @@ public class WebConfig  extends WebMvcConfigurationSupport {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(userArgumentResolver);
+		argumentResolvers.add(tokenArgumentResolver);
 	}
 	
 	@Override
